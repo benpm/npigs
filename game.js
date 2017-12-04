@@ -342,6 +342,11 @@ function create(params) {
 
 	//Input
 	cursors = game.input.keyboard.createCursorKeys();
+	wasd = game.input.keyboard.addKeys( { 
+		"up": Phaser.KeyCode.W, 
+		"down": Phaser.KeyCode.S, 
+		"left": Phaser.KeyCode.A, 
+		"right": Phaser.KeyCode.D } );
 	keyNew = game.input.keyboard.addKey(Phaser.Keyboard.N);
 	keySwap = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	keyPause = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
@@ -363,6 +368,7 @@ function create(params) {
 	togglePause();
 	windowResize();
 	game.world.pivot.set(0, 400);
+	game.input.keyboard.clearCaptures();
 }
 
 //Game frame update handler
@@ -473,16 +479,16 @@ function update(params) {
 	}
 
 	//Player controls
-	if (cursors.left.isDown) {
+	if (cursors.left.isDown || wasd.left.isDown) {
 		current.body.velocity.x -= 100;
-	} else if (cursors.right.isDown) {
+	} else if (cursors.right.isDown || wasd.right.isDown) {
 		current.body.velocity.x += 100;
 	} else {
 		current.body.velocity.x /= 2;
 	}
 
 	//Jump
-	if (cursors.up.justPressed() && current.jumps > 0) {
+	if ((cursors.up.justPressed() || wasd.up.justPressed()) && current.jumps > 0) {
 		current.body.velocity.y = -500;
 		current.jumps -= 1;	
 		game.sound.play(["jump", "jump2", "jump3"][clamp(current.jumps, 0, 2)], 0.75);
