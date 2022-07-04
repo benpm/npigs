@@ -1,2 +1,2 @@
-# npigs
-Npigs - LD40 game involving many pigs and platforms
+# Npigs (New!)
+A game about jumping pigs
